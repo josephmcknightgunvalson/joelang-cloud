@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:registry.terraform.io)",
+      "Bash(terraform fmt:*)",
+      "Bash(terraform init:*)",
+      "Bash(terraform validate:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git branch:*)",
+      "Bash(git fetch:*)",
+      "Bash(git pull:*)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git status:*)",
+      "Bash(git remote:*)",
+      "Bash(git stash:*)",
+      "Bash(git merge:*)",
+      "Bash(git rebase:*)",
+      "Bash(git init:*)",
+      "Bash(git tag:*)",
+      "Bash(pre-commit:*)",
+      "Bash(source ~/.zshenv:*)"
+    ]
+  }
+}

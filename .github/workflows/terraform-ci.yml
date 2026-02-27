@@ -1,0 +1,109 @@
+name: Terraform CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  fmt:
+    name: Terraform Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Check formatting
+        run: terraform fmt -check -recursive -diff
+        working-directory: terraform/
+
+  lint:
+    name: TFLint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: terraform-linters/setup-tflint@v4
+
+      - name: Init TFLint
+        run: tflint --init
+        working-directory: terraform/dev/
+
+      - name: Run TFLint (dev)
+        run: tflint
+        working-directory: terraform/dev/
+
+      - name: Run TFLint (modules/iam)
+        run: tflint
+        working-directory: terraform/modules/iam/
+
+      - name: Run TFLint (modules/vertex)
+        run: tflint
+        working-directory: terraform/modules/vertex/
+
+      - name: Run TFLint (modules/postgres)
+        run: tflint
+        working-directory: terraform/modules/postgres/
+
+      - name: Run TFLint (modules/networking)
+        run: tflint
+        working-directory: terraform/modules/networking/
+
+      - name: Run TFLint (modules/cloud-armor)
+        run: tflint
+        working-directory: terraform/modules/cloud-armor/
+
+  security:
+    name: Trivy Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Trivy scan (dev)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: terraform/dev/
+          severity: HIGH,CRITICAL
+          exit-code: 1
+
+      - name: Trivy scan (modules/iam)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: terraform/modules/iam/
+          severity: HIGH,CRITICAL
+          exit-code: 1
+
+      - name: Trivy scan (modules/vertex)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: terraform/modules/vertex/
+          severity: HIGH,CRITICAL
+          exit-code: 1
+
+      - name: Trivy scan (modules/postgres)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: terraform/modules/postgres/
+          severity: HIGH,CRITICAL
+          exit-code: 1
+
+      - name: Trivy scan (modules/networking)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: terraform/modules/networking/
+          severity: HIGH,CRITICAL
+          exit-code: 1
+
+      - name: Trivy scan (modules/cloud-armor)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: terraform/modules/cloud-armor/
+          severity: HIGH,CRITICAL
+          exit-code: 1
