@@ -31,3 +31,14 @@ variable "github_repo" {
   description = "GitHub repository (owner/repo) for workload identity federation"
   type        = string
 }
+
+variable "github_user" {
+  description = "GitHub username for Atlantis"
+  type        = string
+}
+
+variable "atlantis_domain" {
+  description = "Domain name for the Atlantis instance"
+  type        = string
+  default     = "atlantis.joe.lang.com"
+}

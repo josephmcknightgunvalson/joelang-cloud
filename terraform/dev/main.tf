@@ -37,12 +37,26 @@ module "vertex" {
   search_engine_id       = var.search_engine_id
 }
 
-# module "networking" {
-#   source = "../modules/networking"
-#
-#   project_id = var.project_id
-#   region     = var.region
-# }
+module "networking" {
+  source = "../modules/networking"
+
+  project_id = var.project_id
+  region     = var.region
+}
+
+module "atlantis" {
+  source = "../modules/atlantis"
+
+  project_id            = var.project_id
+  region                = var.region
+  network               = module.networking.network_name
+  subnetwork            = module.networking.subnet_name
+  atlantis_domain       = var.atlantis_domain
+  github_user           = var.github_user
+  github_repo_allowlist = "github.com/${var.github_repo}"
+
+  depends_on = [module.networking]
+}
 
 # module "cloud_armor" {
 #   source = "../modules/cloud-armor"

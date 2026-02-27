@@ -55,15 +55,40 @@ output "auth_instructions" {
 #   sensitive   = true
 # }
 
-# output "vpc_network_name" {
-#   description = "Name of the VPC network"
-#   value       = module.networking.network_name
-# }
+output "vpc_network_name" {
+  description = "Name of the VPC network"
+  value       = module.networking.network_name
+}
 
-# output "vpc_connector_id" {
-#   description = "ID of the VPC Access connector for Cloud Run"
-#   value       = module.networking.vpc_connector_id
-# }
+output "vpc_connector_id" {
+  description = "ID of the VPC Access connector for Cloud Run"
+  value       = module.networking.vpc_connector_id
+}
+
+output "atlantis_ip" {
+  description = "Public IP address of the Atlantis instance"
+  value       = module.atlantis.instance_ip
+}
+
+output "atlantis_url" {
+  description = "URL for the Atlantis web interface"
+  value       = module.atlantis.atlantis_url
+}
+
+output "atlantis_service_account_email" {
+  description = "Email of the Atlantis service account"
+  value       = module.atlantis.service_account_email
+}
+
+output "state_bucket_name" {
+  description = "Name of the GCS bucket for Terraform state"
+  value       = module.atlantis.state_bucket_name
+}
+
+output "state_bucket_url" {
+  description = "URL of the GCS bucket for Terraform state"
+  value       = module.atlantis.state_bucket_url
+}
 
 # output "cloud_armor_policy" {
 #   description = "Self link of the Cloud Armor WAF policy"

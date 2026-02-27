@@ -13,6 +13,11 @@ output "subnet_id" {
   value       = google_compute_subnetwork.this.id
 }
 
+output "subnet_name" {
+  description = "Name of the regional subnet"
+  value       = google_compute_subnetwork.this.name
+}
+
 output "vpc_connector_id" {
   description = "ID of the VPC Access connector"
   value       = google_vpc_access_connector.this.id
