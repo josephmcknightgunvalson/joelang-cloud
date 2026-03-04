@@ -81,18 +81,6 @@ variable "service_account_id" {
   default     = "joelang-atlantis"
 }
 
-variable "state_bucket_name" {
-  description = "Name for the GCS bucket storing Terraform state"
-  type        = string
-  default     = "joelang-terraform-state"
-}
-
-variable "state_bucket_location" {
-  description = "Location for the GCS state bucket"
-  type        = string
-  default     = "US"
-}
-
 variable "service_account_roles" {
   description = "IAM roles to grant the Atlantis service account"
   type        = list(string)

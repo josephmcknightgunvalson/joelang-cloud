@@ -47,12 +47,6 @@ resource "google_project_service" "secretmanager" {
   disable_on_destroy = false
 }
 
-resource "google_project_service" "storage" {
-  project            = var.project_id
-  service            = "storage.googleapis.com"
-  disable_on_destroy = false
-}
-
 # Service account for Atlantis
 
 resource "google_service_account" "atlantis" {
@@ -69,22 +63,6 @@ resource "google_project_iam_member" "atlantis_roles" {
   project = var.project_id
   role    = each.value
   member  = "serviceAccount:${google_service_account.atlantis.email}"
-}
-
-# GCS bucket for remote Terraform state
-
-resource "google_storage_bucket" "terraform_state" {
-  project                     = var.project_id
-  name                        = var.state_bucket_name
-  location                    = var.state_bucket_location
-  uniform_bucket_level_access = true
-  force_destroy               = false
-
-  versioning {
-    enabled = true
-  }
-
-  depends_on = [google_project_service.storage]
 }
 
 # Static external IP for the Atlantis instance

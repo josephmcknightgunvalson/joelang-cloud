@@ -62,16 +62,14 @@ resource "google_service_networking_connection" "this" {
 }
 
 resource "google_vpc_access_connector" "this" {
-  project        = var.project_id
-  name           = "${var.network_name}-connector"
-  region         = var.region
-  ip_cidr_range  = var.connector_cidr
-  network        = google_compute_network.this.name
-  machine_type   = var.connector_machine_type
-  min_instances  = var.connector_min_instances
-  max_instances  = var.connector_max_instances
-  min_throughput = 200
-  max_throughput = 300
+  project       = var.project_id
+  name          = "${var.network_name}-connector"
+  region        = var.region
+  ip_cidr_range = var.connector_cidr
+  network       = google_compute_network.this.name
+  machine_type  = var.connector_machine_type
+  min_instances = var.connector_min_instances
+  max_instances = var.connector_max_instances
 
   depends_on = [google_project_service.vpcaccess, google_compute_network.this]
 }

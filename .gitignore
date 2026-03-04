@@ -5,6 +5,8 @@
 .terraform.lock.hcl
 terraform.tfvars
 *.auto.tfvars
+*.tfplan
+tf.out
 
 # IDE
 .idea/

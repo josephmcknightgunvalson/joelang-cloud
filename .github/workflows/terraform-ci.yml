@@ -54,6 +54,10 @@ jobs:
         run: tflint
         working-directory: terraform/modules/cloud-armor/
 
+      - name: Run TFLint (modules/atlantis)
+        run: tflint
+        working-directory: terraform/modules/atlantis/
+
   security:
     name: Trivy Security Scan
     runs-on: ubuntu-latest
@@ -105,5 +109,13 @@ jobs:
         with:
           scan-type: config
           scan-ref: terraform/modules/cloud-armor/
+          severity: HIGH,CRITICAL
+          exit-code: 1
+
+      - name: Trivy scan (modules/atlantis)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: config
+          scan-ref: terraform/modules/atlantis/
           severity: HIGH,CRITICAL
           exit-code: 1

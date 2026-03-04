@@ -6,13 +6,17 @@ variable "project_id" {
 variable "service_account_id" {
   description = "ID for the service account"
   type        = string
-  default     = "joelang-local-dev"
 }
 
 variable "service_account_display_name" {
   description = "Display name for the service account"
   type        = string
-  default     = "JoeLang Local Development"
+}
+
+variable "description" {
+  description = "Description for the service account"
+  type        = string
+  default     = ""
 }
 
 variable "roles" {
@@ -20,9 +24,16 @@ variable "roles" {
   type        = list(string)
 }
 
+variable "enable_workload_identity" {
+  description = "Whether to create workload identity pool and provider for GitHub Actions"
+  type        = bool
+  default     = false
+}
+
 variable "github_repo" {
   description = "GitHub repository (owner/repo) for workload identity federation"
   type        = string
+  default     = ""
 }
 
 variable "workload_identity_pool_id" {

@@ -19,7 +19,7 @@ resource "google_service_account" "this" {
   project      = var.project_id
   account_id   = var.service_account_id
   display_name = var.service_account_display_name
-  description  = "Service account for local development access"
+  description  = var.description
 
   depends_on = [google_project_service.iam]
 }
@@ -33,6 +33,8 @@ resource "google_project_iam_member" "roles" {
 }
 
 resource "google_iam_workload_identity_pool" "github" {
+  count = var.enable_workload_identity ? 1 : 0
+
   project                   = var.project_id
   workload_identity_pool_id = var.workload_identity_pool_id
   display_name              = "GitHub Actions"
@@ -41,8 +43,10 @@ resource "google_iam_workload_identity_pool" "github" {
 }
 
 resource "google_iam_workload_identity_pool_provider" "github" {
+  count = var.enable_workload_identity ? 1 : 0
+
   project                            = var.project_id
-  workload_identity_pool_id          = google_iam_workload_identity_pool.github.workload_identity_pool_id
+  workload_identity_pool_id          = google_iam_workload_identity_pool.github[0].workload_identity_pool_id
   workload_identity_pool_provider_id = "github-oidc"
   display_name                       = "GitHub OIDC"
 
@@ -60,7 +64,9 @@ resource "google_iam_workload_identity_pool_provider" "github" {
 }
 
 resource "google_service_account_iam_member" "workload_identity" {
+  count = var.enable_workload_identity ? 1 : 0
+
   service_account_id = google_service_account.this.name
   role               = "roles/iam.workloadIdentityUser"
-  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github.name}/attribute.repository/${var.github_repo}"
+  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github[0].name}/attribute.repository/${var.github_repo}"
 }

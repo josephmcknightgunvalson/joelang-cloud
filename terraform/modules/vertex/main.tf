@@ -29,6 +29,12 @@ resource "google_discovery_engine_data_store" "knowledge_base" {
   content_config    = "CONTENT_REQUIRED"
   solution_types    = ["SOLUTION_TYPE_SEARCH"]
 
+  document_processing_config {
+    default_parsing_config {
+      digital_parsing_config {}
+    }
+  }
+
   depends_on = [google_project_service.discoveryengine]
 }
 

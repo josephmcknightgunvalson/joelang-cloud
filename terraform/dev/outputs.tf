@@ -8,19 +8,9 @@ output "workload_identity_provider" {
   value       = module.iam.workload_identity_provider
 }
 
-output "data_store_name" {
-  description = "Full resource name of the Discovery Engine data store"
-  value       = module.vertex.data_store_name
-}
-
-output "search_engine_name" {
-  description = "Full resource name of the Discovery Engine search engine"
-  value       = module.vertex.search_engine_name
-}
-
-output "gemini_endpoint" {
-  description = "Vertex AI Gemini API endpoint URL"
-  value       = module.vertex.gemini_endpoint
+output "terraform_service_account_email" {
+  description = "Service account email for Terraform automation"
+  value       = module.iam_terraform.service_account_email
 }
 
 output "auth_instructions" {
@@ -65,29 +55,29 @@ output "vpc_connector_id" {
   value       = module.networking.vpc_connector_id
 }
 
-output "atlantis_ip" {
-  description = "Public IP address of the Atlantis instance"
-  value       = module.atlantis.instance_ip
-}
-
-output "atlantis_url" {
-  description = "URL for the Atlantis web interface"
-  value       = module.atlantis.atlantis_url
-}
-
-output "atlantis_service_account_email" {
-  description = "Email of the Atlantis service account"
-  value       = module.atlantis.service_account_email
-}
+# output "atlantis_ip" {
+#   description = "Public IP address of the Atlantis instance"
+#   value       = module.atlantis.instance_ip
+# }
+#
+# output "atlantis_url" {
+#   description = "URL for the Atlantis web interface"
+#   value       = module.atlantis.atlantis_url
+# }
+#
+# output "atlantis_service_account_email" {
+#   description = "Email of the Atlantis service account"
+#   value       = module.atlantis.service_account_email
+# }
 
 output "state_bucket_name" {
   description = "Name of the GCS bucket for Terraform state"
-  value       = module.atlantis.state_bucket_name
+  value       = google_storage_bucket.terraform_state.name
 }
 
 output "state_bucket_url" {
   description = "URL of the GCS bucket for Terraform state"
-  value       = module.atlantis.state_bucket_url
+  value       = google_storage_bucket.terraform_state.url
 }
 
 # output "cloud_armor_policy" {
