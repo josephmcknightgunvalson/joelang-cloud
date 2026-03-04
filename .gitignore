@@ -14,5 +14,8 @@ tf.out
 *.swp
 *.swo
 
+# Claude
+.claude/settings.local.json
+
 # OS
 .DS_Store
